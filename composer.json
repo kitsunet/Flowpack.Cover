@@ -1,0 +1,13 @@
+{
+    "name": "flowpack/cover",
+    "type": "typo3-flow-package",
+    "description": "Allows Modification of Request and Response and such things as caching of responses.",
+    "require": {
+        "typo3/flow": "*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Flowpack\\Cover": "Classes"
+        }
+    }
+}

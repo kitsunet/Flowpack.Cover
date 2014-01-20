@@ -1,0 +1,35 @@
+#                                                                          #
+# Object Configuration for the Flowpack.Cover package                      #
+#                                                                          #
+# This file contains the default object configuration for the TYPO3 Flow   #
+# Framework. Because it is loaded at a very early stage during ini-        #
+# tialization, this configuration cannot be overriden by other con-        #
+# figuration files.                                                        #
+#                                                                          #
+
+Flowpack\Cover\Cache\ResponseCacheHelper:
+  properties:
+    responseCache:
+      object:
+        factoryObjectName: TYPO3\Flow\Cache\CacheManager
+        factoryMethodName: getCache
+        arguments:
+          1:
+            value: Flowpack_Cover_Response_Cache
+    contentCache:
+      object:
+        factoryObjectName: TYPO3\Flow\Cache\CacheManager
+        factoryMethodName: getCache
+        arguments:
+          1:
+            value: Flowpack_Cover_Content_Cache
+
+Flowpack\Cover\Aspect\NeosCacheFlushAspect:
+  properties:
+    responseCache:
+      object:
+        factoryObjectName: TYPO3\Flow\Cache\CacheManager
+        factoryMethodName: getCache
+        arguments:
+          1:
+            value: Flowpack_Cover_Response_Cache

@@ -1,0 +1,16 @@
+Flowpack:
+  Cover:
+    cacheSettings:
+      # Requests should set their lifetime, but if not set then this will be the default lifetime.
+      defaultLifetime: 300
+    steps:
+      beforeDispatch:
+        fetchFromCache:
+          condition: "request.getHttpRequest().isMethodSafe() && responseCache.allowsCaching(request)"
+          position: 'start'
+          action: "responseCache.get(request, response, session)"
+      afterDispatch:
+        setToCache:
+          condition: "request.getHttpRequest().getHeader('X-Cover-CacheIdentifier') && session.isStarted() != TRUE && responseCache.canBeCached(response)"
+          position: 'end 9999'
+          action: "responseCache.set(request, response, session)"
