@@ -186,7 +186,7 @@ class ResponseCacheHelper {
 		$cacheTags[] = 'controllerAction%' . $controllerObjectName . '-' . $request->getControllerActionName();
 
 		if ($session !== NULL && $session->isStarted()) {
-			$cacheTags[] = 'session:' . $session->getId();
+			$cacheTags[] = 'session-' . $session->getId();
 		}
 
 		return $cacheTags;
