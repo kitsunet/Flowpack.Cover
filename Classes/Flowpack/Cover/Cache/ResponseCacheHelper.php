@@ -111,7 +111,7 @@ class ResponseCacheHelper {
 		$responseContent = $response->getContent();
 		$this->contentCache->set($requestHash, $responseContent, $this->calculateCacheTags($request, $session), $cacheLifetime);
 		$response->setContent('');
-		$this->responseCache->set($requestHash, $response, array(), $cacheLifetime);
+		$this->responseCache->set($requestHash, $response, $this->calculateCacheTags($request, $session), $cacheLifetime);
 		$response->setContent($responseContent);
 		return TRUE;
 	}
@@ -185,8 +185,13 @@ class ResponseCacheHelper {
 		$cacheTags[] = 'action%' . $request->getControllerActionName();
 		$cacheTags[] = 'controllerAction%' . $controllerObjectName . '-' . $request->getControllerActionName();
 
+		$arguments = $request->getArguments();
+		if (array_key_exists('node', $arguments)) {
+			$cacheTags[] = 'node-' . $arguments['node'];
+		}
+
 		if ($session !== NULL && $session->isStarted()) {
-			$cacheTags[] = 'session:' . $session->getId();
+			$cacheTags[] = 'session-' . $session->getId();
 		}
 
 		return $cacheTags;
