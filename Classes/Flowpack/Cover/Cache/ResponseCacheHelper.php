@@ -111,7 +111,7 @@ class ResponseCacheHelper {
 		$responseContent = $response->getContent();
 		$this->contentCache->set($requestHash, $responseContent, $this->calculateCacheTags($request, $session), $cacheLifetime);
 		$response->setContent('');
-		$this->responseCache->set($requestHash, $response, array(), $cacheLifetime);
+		$this->responseCache->set($requestHash, $response, $this->calculateCacheTags($request, $session), $cacheLifetime);
 		$response->setContent($responseContent);
 		return TRUE;
 	}
