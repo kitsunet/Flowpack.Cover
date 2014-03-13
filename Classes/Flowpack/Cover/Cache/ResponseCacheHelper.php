@@ -185,6 +185,11 @@ class ResponseCacheHelper {
 		$cacheTags[] = 'action%' . $request->getControllerActionName();
 		$cacheTags[] = 'controllerAction%' . $controllerObjectName . '-' . $request->getControllerActionName();
 
+		$arguments = $request->getArguments();
+		if (array_key_exists('node', $arguments)) {
+			$cacheTags[] = 'node-' . $arguments['node'];
+		}
+
 		if ($session !== NULL && $session->isStarted()) {
 			$cacheTags[] = 'session-' . $session->getId();
 		}

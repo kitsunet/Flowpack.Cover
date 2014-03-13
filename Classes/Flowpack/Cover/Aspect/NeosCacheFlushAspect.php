@@ -13,6 +13,7 @@ namespace Flowpack\Cover\Aspect;
 
 use TYPO3\Flow\Annotations as Flow;
 use TYPO3\Flow\Aop\JoinPointInterface;
+use TYPO3\Eel\FlowQuery\FlowQuery;
 
 /**
  * Wraps the Dispatcher and manipulates the Request and Response.
@@ -35,6 +36,9 @@ class NeosCacheFlushAspect {
 	 * @return void
 	 */
 	public function manipulateRequestAndResponse(JoinPointInterface $joinPoint) {
-		$this->responseCache->flushByTag('controllerObject%' . 'TYPO3_Neos_Controller_Frontend_NodeController');
+		$node = $joinPoint->getMethodArgument('node');
+		$flowQuery = new FlowQuery(array($node));
+		$documentNode = $flowQuery->closest('[instanceof TYPO3.Neos:Document]')->get(0);
+		$this->responseCache->flushByTag('node-' . $documentNode->getIdentifier());
 	}
 }
